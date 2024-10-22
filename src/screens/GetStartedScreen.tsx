@@ -5,19 +5,18 @@ import {colors} from '../theme/colors';
 import {SplashImage} from '../../assets/images/images';
 import {BlurView} from '@react-native-community/blur';
 import GlobalText from '../components/Text/GlobalText';
+import {useNavigation} from '@react-navigation/native';
 const GetStartedScreen = () => {
+  const navigation = useNavigation();
+
   const handlePress = () => {
-    console.log('Button Pressed!');
+    navigation.navigate('SignupScreen');
   };
 
   return (
     <View style={styles.container}>
       <Image source={SplashImage} />
-      <BlurView
-        style={styles.absolute}
-        blurType="light" // Types: 'light', 'dark', 'xlight', 'prominent'
-        blurAmount={1}
-      />
+      <BlurView style={styles.absolute} blurType="light" blurAmount={1} />
       <View style={{paddingHorizontal: 10}}>
         <GlobalText variant="h1" style={{textAlign: 'center'}}>
           Find your crew. Discover {'\n'} your scene
@@ -27,7 +26,11 @@ const GetStartedScreen = () => {
           style={{textAlign: 'center', marginVertical: 10}}>
           Connect with friends and find fun places to hang out.
         </GlobalText>
-        <GradientButton title="Get started" style={{marginTop: 5}} />
+        <GradientButton
+          title="Get started"
+          style={{marginTop: 5}}
+          onPress={handlePress}
+        />
       </View>
     </View>
   );
@@ -46,11 +49,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  // container: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   margin: 20,
-  // },
+
   textInput: {
     flex: 1,
     borderWidth: 1,

@@ -4,7 +4,13 @@ import GradientVew from '../../components/GradientView./GradientView';
 import GlobalText from '../../components/Text/GlobalText';
 import {colors} from '../../theme/colors';
 import OTPTextInput from 'react-native-otp-textinput';
+import {useNavigation} from '@react-navigation/native';
 const OTPverifyScreen = () => {
+  const navigation = useNavigation();
+  const handleOtp = () => {
+    navigation.navigate('SetProfileScreen');
+  };
+
   return (
     <GradientVew style={{padding: 15}}>
       <GlobalText variant="h1" style={{marginTop: 60}}>
@@ -17,7 +23,7 @@ const OTPverifyScreen = () => {
         containerStyle={styles.otpContainer}
       />
       <View style={styles.rowButton}>
-        <TouchableOpacity style={styles.ResendBtn}>
+        <TouchableOpacity style={styles.ResendBtn} onPress={handleOtp}>
           <GlobalText variant="h3" style={{color: colors.primary}}>
             Resend Code
           </GlobalText>

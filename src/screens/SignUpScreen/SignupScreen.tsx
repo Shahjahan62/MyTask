@@ -9,39 +9,33 @@ import ChooseGenderButton from '../../ChooseGenderButton';
 import GradientButton from '../../components/GradientButton';
 import GlobalText from '../../components/Text/GlobalText';
 import {colors} from '../../theme/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const SignupScreen = () => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [countryCode, setCountryCode] = useState('US'); // Default to United States
-  const [callingCode, setCallingCode] = useState('1'); // Default calling code for US
+  const [countryCode, setCountryCode] = useState('US');
+  const [callingCode, setCallingCode] = useState('+1');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isPickerVisible, setPickerVisible] = useState(false);
+  const [activeGender, setActiveGender] = useState<string | null>('male');
 
   const onSelect = country => {
     setCountryCode(country.cca2);
     setCallingCode(country.callingCode[0]);
-    setPickerVisible(false); // Close picker after selection
+    setPickerVisible(false);
   };
-  const [activeGender, setActiveGender] = useState<string | null>(null);
 
   const handleGenderPress = (gender: string) => {
     setActiveGender(gender);
   };
 
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
-  const [formattedDate, setFormattedDate] = useState('');
+  const Array = ['male', 'female', 'Rather not say'];
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(false);
-    setDate(currentDate);
-
-    // Format the date to a readable string (e.g., "YYYY-MM-DD")
-    const formatted = currentDate.toISOString().split('T')[0];
-    setFormattedDate(formatted);
+  const handleSignin = () => {
+    navigation.navigate('OTPverifyScreen');
   };
+
   return (
     <GradientVew style={{padding: 10}}>
       <Header title="SignUp" pageNumber={'2'} />
@@ -51,7 +45,6 @@ const SignupScreen = () => {
         onChangeText={setUsername}
         placeholder="Type your full name"
       />
-
       <CountryPickerInput
         countryCode={countryCode}
         callingCode={callingCode}
@@ -61,10 +54,12 @@ const SignupScreen = () => {
         setPickerVisible={setPickerVisible}
         onSelect={onSelect}
       />
+
       <DatePickerInput />
       <View style={styles.rowButton}>
-        {['male', 'female', 'Rather not say'].map(item => (
+        {Array.map((item, index) => (
           <ChooseGenderButton
+            key={index}
             title={item}
             onPress={() => handleGenderPress(item)}
             isActive={activeGender === item}
@@ -73,14 +68,9 @@ const SignupScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <GradientButton title="Create account" onPress={() => {}} />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <View style={styles.rowText}>
           <GlobalText variant="h3">Already have an account?</GlobalText>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleSignin}>
             <GlobalText variant="h3" style={styles.text}>
               Sign in
             </GlobalText>
@@ -109,5 +99,10 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginVertical: 10,
     fontWeight: 'bold',
+  },
+  rowText: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -3,6 +3,7 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import GlobalText from './Text/GlobalText';
 import {colors} from '../theme/colors';
+import {useNavigation} from '@react-navigation/native';
 
 interface HeaderProps {
   title: string;
@@ -10,9 +11,15 @@ interface HeaderProps {
 }
 
 const Header = ({title, pageNumber}: HeaderProps) => {
+  const navigation = useNavigation();
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleBack}>
         <Ionicons name="chevron-back-outline" size={24} color="white" />
       </TouchableOpacity>
       <GlobalText variant="h2">{title}</GlobalText>

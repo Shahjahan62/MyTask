@@ -4,12 +4,20 @@ import AddFriendScreen from '../screens/AddFriendScreen/AddFriendScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import GetStartedScreen from '../screens/GetStartedScreen';
+import SignupScreen from '../screens/SignUpScreen/SignupScreen';
+import OTPverifyScreen from '../screens/OTPverify/OTPverifyScreen';
+import SetProfileScreen from '../screens/SetProfileScreen/SetProfileScreen';
+const Stack = createNativeStackNavigator();
 const MainStack = () => {
-  const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={GetStartedScreen} />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="GetStartedScreen" component={GetStartedScreen} />
+        <Stack.Screen name="SignupScreen" component={SignupScreen} />
+        <Stack.Screen name="OTPverifyScreen" component={OTPverifyScreen} />
+        <Stack.Screen name="SetProfileScreen" component={SetProfileScreen} />
+
+        <Stack.Screen name="AddFriendScreen" component={AddFriendScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
